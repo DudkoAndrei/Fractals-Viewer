@@ -1,5 +1,7 @@
 #include "color.h"
 
+#include <tuple>
+
 Color::Color(uint8_t red, uint8_t green, uint8_t blue)
     : red_(red), green_(green), blue_(blue) {}
 
@@ -37,6 +39,16 @@ Color Color::operator+(const Color& rhs) const {
   return result;
 }
 
+Color Color::operator-(const Color& rhs) const {
+  Color result = *this;
+
+  result.red_ += rhs.red_;
+  result.green_ += rhs.green_;
+  result.blue_ += rhs.blue_;
+
+  return result;
+}
+
 Color Color::operator*(double rhs) const {
   Color result = *this;
 
@@ -45,4 +57,17 @@ Color Color::operator*(double rhs) const {
   result.blue_ *= rhs;
 
   return result;
+}
+
+bool Color::operator==(const Color& rhs) const {
+  return std::tie(red_, green_, blue_) ==
+      std::tie(rhs.red_, rhs.green_, rhs.blue_);
+}
+
+Color operator*(double lhs, const Color& rhs) {
+  return rhs * lhs;
+}
+
+Color Color::operator/(double rhs) const {
+  return (*this) * (1 / rhs);
 }

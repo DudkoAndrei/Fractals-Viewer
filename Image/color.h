@@ -15,8 +15,14 @@ class Color {
   uint8_t& g();
   uint8_t& b();
 
-  Color operator*(double rhs) const;
   Color operator+(const Color& rhs) const;
+  Color operator-(const Color& rhs) const;
+  Color operator*(double rhs) const;
+  Color operator/(double rhs) const;
+
+  friend Color operator*(double lhs, const Color& rhs);
+
+  bool operator==(const Color& rhs) const;
 
  private:
   uint8_t red_{0};
