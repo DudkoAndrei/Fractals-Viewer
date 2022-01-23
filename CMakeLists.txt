@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(fractals
         main.cpp
         Image/color.cpp
-        Image/gradient.cpp Image/gradient.h Helpers/helpers.h Helpers/constants.h)
+        Image/gradient.cpp
+        Image/image.cpp)
