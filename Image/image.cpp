@@ -1,5 +1,5 @@
-#include <algorithm>
 #include <cassert>
+
 #include "image.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -132,5 +132,6 @@ void Image::WriteToFile(const std::string& filename) const {
     image[i + 1] = data_[pixel_pos].g();
     image[i + 2] = data_[pixel_pos].b();
   }
+
   stbi_write_bmp(filename.c_str(), width_, height_, 3, image);
 }

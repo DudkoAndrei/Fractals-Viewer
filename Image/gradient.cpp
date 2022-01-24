@@ -1,6 +1,5 @@
 #include "gradient.h"
 
-#include <utility>
 #include <cassert>
 #include <cmath>
 

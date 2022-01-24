@@ -22,11 +22,10 @@ class Color {
 
   friend Color operator*(double lhs, const Color& rhs);
 
-  bool operator==(const Color& rhs) const;
+  bool operator==(const Color& rhs) const = default;
 
  private:
   uint8_t red_{0};
   uint8_t green_{0};
   uint8_t blue_{0};
 };
-
