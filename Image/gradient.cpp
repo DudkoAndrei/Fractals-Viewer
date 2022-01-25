@@ -1,7 +1,6 @@
 #include "gradient.h"
 
 #include <cassert>
-#include <cmath>
 
 Gradient::Gradient(const std::vector<Color>& colors) {
   std::vector<GradientPoint> points;
