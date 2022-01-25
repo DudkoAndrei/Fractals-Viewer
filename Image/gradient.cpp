@@ -26,8 +26,7 @@ void Gradient::FillPoints(const std::vector<GradientPoint>& points) {
 }
 
 Color Gradient::operator[](float coordinate) const {
-  using namespace helpers;
-  assert(std::fabs(coordinate) <= constants::kMaxBoundAbsValue);
+  assert(std::fabs(coordinate) <= helpers::constants::kMaxBoundAbsValue);
   long long new_coordinate = ToInnerCoordinate(coordinate);
   auto closest_right = points_.upper_bound(new_coordinate);
   auto closest_left = points_.lower_bound(new_coordinate);
@@ -35,8 +34,12 @@ Color Gradient::operator[](float coordinate) const {
   assert(closest_left != points_.end());
   assert(closest_right != points_.end());
 
-  return MapValue(new_coordinate, closest_left->first, closest_right->first,
-                  closest_left->second, closest_right->second);
+  double alpha = 0;
+  if (closest_left->first != closest_right->first) {
+    alpha = static_cast<double>(closest_right->first - new_coordinate) /
+        static_cast<double>(closest_right->first - closest_left->first);
+  }
+  return Color::Mix(closest_left->second, closest_right->second, alpha);
 }
 
 float Gradient::GetLeftBound() const {

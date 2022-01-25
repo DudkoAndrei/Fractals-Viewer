@@ -1,5 +1,7 @@
 #include "color.h"
 
+#include <cassert>
+#include <cmath>
 #include <tuple>
 
 Color::Color(uint8_t red, uint8_t green, uint8_t blue)
@@ -39,12 +41,19 @@ Color Color::operator+(const Color& rhs) const {
   return result;
 }
 
+uint8_t SubtractUnsigned(uint8_t lhs, uint8_t rhs) {
+  if (lhs >= rhs) {
+    return lhs - rhs;
+  }
+  return 0;
+}
+
 Color Color::operator-(const Color& rhs) const {
   Color result = *this;
 
-  result.red_ -= rhs.red_;
-  result.green_ -= rhs.green_;
-  result.blue_ -= rhs.blue_;
+  result.red_ = SubtractUnsigned(result.red_, rhs.red_);
+  result.green_ = SubtractUnsigned(result.green_, rhs.green_);
+  result.blue_ = SubtractUnsigned(result.blue_, rhs.blue_);
 
   return result;
 }
@@ -65,4 +74,18 @@ Color operator*(double lhs, const Color& rhs) {
 
 Color Color::operator/(double rhs) const {
   return (*this) * (1 / rhs);
+}
+
+bool Color::operator==(const Color& rhs) const {
+  return std::tie(red_, green_, blue_) ==
+      std::tie(rhs.red_, rhs.green_, rhs.blue_);
+}
+
+bool Color::operator!=(const Color& rhs) const {
+  return !((*this) == rhs);
+}
+
+Color Color::Mix(const Color& color1, const Color& color2, double alpha) {
+  assert(std::fabs(alpha) <= 1);
+  return color1 * alpha + (1 - alpha) * color2;
 }
