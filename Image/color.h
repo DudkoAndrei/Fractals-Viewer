@@ -22,7 +22,11 @@ class Color {
 
   friend Color operator*(double lhs, const Color& rhs);
 
-  bool operator==(const Color& rhs) const = default;
+  bool operator==(const Color& rhs) const;
+  bool operator!=(const Color& rhs) const;
+
+  // alpha * color1 + (1 - alpha) * color2
+  static Color Mix(const Color& color1, const Color& color2, double alpha);
 
  private:
   uint8_t red_{0};
