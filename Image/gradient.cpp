@@ -3,8 +3,6 @@
 #include <cassert>
 #include <cmath>
 
-#include "../Helpers/helpers.h"
-
 Gradient::Gradient(const std::vector<Color>& colors) {
   std::vector<GradientPoint> points;
   float pos = 0;
@@ -21,45 +19,35 @@ Gradient::Gradient(const std::vector<GradientPoint>& points)  {
 
 void Gradient::FillPoints(const std::vector<GradientPoint>& points) {
   for (const auto& [coordinate, color] : points) {
-    points_[ToInnerCoordinate(coordinate)] = color;
+    points_[coordinate] = color;
   }
 }
 
-Color Gradient::operator[](float coordinate) const {
-  assert(std::fabs(coordinate) <= helpers::constants::kMaxBoundAbsValue);
-  long long new_coordinate = ToInnerCoordinate(coordinate);
-  auto closest_right = points_.upper_bound(new_coordinate);
-  auto closest_left = points_.lower_bound(new_coordinate);
+Color Gradient::operator[](double coordinate) const {
+  auto closest_right = points_.upper_bound(coordinate);
+  auto closest_left = points_.lower_bound(coordinate);
   --closest_left;
   assert(closest_left != points_.end());
   assert(closest_right != points_.end());
 
   double alpha = 0;
   if (closest_left->first != closest_right->first) {
-    alpha = static_cast<double>(closest_right->first - new_coordinate) /
-        static_cast<double>(closest_right->first - closest_left->first);
+    alpha = (closest_right->first - coordinate) /
+        (closest_right->first - closest_left->first);
   }
   return Color::Mix(closest_left->second, closest_right->second, alpha);
 }
 
-float Gradient::GetLeftBound() const {
+double Gradient::GetLeftBound() const {
   assert(!points_.empty());
-  return FromInnerCoordinate(points_.begin()->first);
+  return points_.begin()->first;
 }
 
-float Gradient::GetRightBound() const {
+double Gradient::GetRightBound() const {
   assert(!points_.empty());
-  return FromInnerCoordinate((--points_.end())->first);
-}
-
-long long Gradient::ToInnerCoordinate(float coordinate) {
-  return coordinate * helpers::constants::kToIntMultiplier;
-}
-
-float Gradient::FromInnerCoordinate(long long coordinate) {
-  return static_cast<float>(coordinate) / helpers::constants::kToIntMultiplier;
+  return (--points_.end())->first;
 }
 
 void Gradient::AddPoint(const Gradient::GradientPoint& point) {
-  points_[ToInnerCoordinate(point.coordinate)] = point.color;
+  points_[point.coordinate] = point.color;
 }
