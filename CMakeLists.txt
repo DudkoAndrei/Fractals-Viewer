@@ -7,4 +7,4 @@ add_executable(fractals
         main.cpp
         Image/color.cpp
         Image/gradient.cpp
-        Image/image.cpp)
+        Image/image.cpp ImageProcessor/abstract_image_processor.cpp)
