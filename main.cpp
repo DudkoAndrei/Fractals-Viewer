@@ -2,6 +2,8 @@
 
 int main() {
   Controller controller;
+
   controller.RunTest();
+  controller.RunCudaTest();
   return 0;
 }

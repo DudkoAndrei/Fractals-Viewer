@@ -7,7 +7,7 @@ std::optional<long long> MandelbrotSet(const Point& point) {
 
   size_t iteration = 0;
   while (iteration < 1000 && abs(z) < (2 << 8)) {
-    z = (z*z)   + c;
+    z = (z * z) + c;
     ++iteration;
   }
 
@@ -22,4 +22,11 @@ void Controller::RunTest() {
 
   ImageSettings settings = {1000, 1000, 0, 0, 1, 1};
   image_processor_->GenerateImage(settings).WriteToFile("first.png");
+}
+
+void Controller::RunCudaTest() {
+  cuda_image_processor_ = std::make_unique<CudaFormulaImageProcessor>();
+
+  ImageSettings settings = {1000, 1000, 0, 0, 200, 200};
+  cuda_image_processor_->GenerateImage(settings).WriteToFile("cuda_test.png");
 }
