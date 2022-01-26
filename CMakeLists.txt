@@ -5,13 +5,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CUDA_STANDARD 17)
 
 add_executable(Fractals
-        main.cpp
+        Algorithms/formula_algorithm.cpp
+        Controller/controller.cpp
+        Cuda/cuda_formula_image_processor.cu
+        Cuda/formulas_samples.cu
+        Cuda/formulas_samples.cuh
+        Helpers/double_comparison.cpp
         Image/color.cpp
         Image/gradient.cpp
         Image/image.cpp
         ImageProcessor/abstract_image_processor.cpp
         ImageProcessor/formula_image_processor.cpp
-        Controller/controller.cpp
-        Point/point.cpp
-        Helpers/double_comparison.cpp
-        Algorithms/formula_algorithm.cpp)
+        main.cpp
+        Point/point.cpp)
