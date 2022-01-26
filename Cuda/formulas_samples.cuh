@@ -3,4 +3,4 @@
 #include "../Image/image_settings.h"
 #include "array.cuh"
 
-void CudaMandelbrotBWSet(Array<bool>* data, ImageSettings settings);
+void CudaMandelbrotBWSet(Array<bool>* data, const ImageSettings& settings);
