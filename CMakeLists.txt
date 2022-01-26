@@ -7,4 +7,10 @@ add_executable(fractals
         main.cpp
         Image/color.cpp
         Image/gradient.cpp
-        Image/image.cpp ImageProcessor/abstract_image_processor.cpp)
+        Image/image.cpp
+        ImageProcessor/abstract_image_processor.cpp
+        ImageProcessor/formula_image_processor.cpp
+        Controller/controller.cpp
+        Point/point.cpp
+        Helpers/double_comparison.cpp
+        Algorithms/formula_algorithm.cpp)
