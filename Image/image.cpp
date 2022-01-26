@@ -61,14 +61,14 @@ int Image::GetHeight() const {
   return height_;
 }
 
-Color& Image::Get(int i, int j) {
-  assert(0 <= i && i < height_ && 0 <= j && j < width_);
-  return data_[i * width_ + j];
+Image::Row Image::operator[](int index) {
+  assert(0 <= index && index < height_);
+  return {data_, index, width_};
 }
 
-const Color& Image::Get(int i, int j) const {
-  assert(0 <= i && i < height_ && 0 <= j && j < width_);
-  return data_[i * width_ + j];
+Image::ConstRow Image::operator[](int index) const {
+  assert(0 <= index && index < height_);
+  return {data_, index, width_};
 }
 
 bool Image::operator==(const Image& rhs) const {
@@ -111,9 +111,9 @@ void Image::LoadFromFile(const std::string& filename) {
   for (int i = 0; i < height; ++i) {
     for (int j = 0; j < width; ++j) {
       int pixel_pos = width * 3 * i + 3 * j;
-      Get(i, j).r() = image[pixel_pos];
-      Get(i, j).g() = image[pixel_pos + 1];
-      Get(i, j).b() = image[pixel_pos + 2];
+      operator[](i)[j].r() = image[pixel_pos];
+      operator[](i)[j].g() = image[pixel_pos + 1];
+      operator[](i)[j].b() = image[pixel_pos + 2];
     }
   }
 
@@ -134,4 +134,8 @@ void Image::WriteToFile(const std::string& filename) const {
   }
 
   stbi_write_bmp(filename.c_str(), width_, height_, 3, image);
+}
+
+bool Image::operator!=(const Image& rhs) const {
+  return !((*this) == rhs);
 }
