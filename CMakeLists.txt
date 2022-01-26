@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
-project(fractals)
+project(Fractals CUDA CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CUDA_STANDARD 17)
 
-add_executable(fractals
+add_executable(Fractals
         main.cpp
         Image/color.cpp
         Image/gradient.cpp
