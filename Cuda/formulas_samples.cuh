@@ -5,6 +5,6 @@
 #include "array.cuh"
 
 void CudaBWFractal(
-    Array<bool>* data,
+    Array<uint64_t>* data,
     const ImageSettings& settings,
     const std::vector<Token>& expression);
