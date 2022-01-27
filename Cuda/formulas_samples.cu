@@ -3,7 +3,7 @@
 #include "formulas_samples.cuh"
 
 __global__ void GenerateBWPoint(
-    bool* result,
+    uint64_t* result,
     ImageSettings* settings,
     Calculator<double>* calc) {
   uint64_t index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -26,14 +26,14 @@ __global__ void GenerateBWPoint(
   }
 
   if (iteration < 1000) {
-    result[index] = true;
+    result[index] = iteration % 16 + 1;
   } else {
-    result[index] = false;
+    result[index] = 0;
   }
 }
 
 void CudaBWFractal(
-    Array<bool>* data,
+    Array<uint64_t>* data,
     const ImageSettings& settings,
     const std::vector<Token>& expression) {
   uint64_t block_size = 256;
