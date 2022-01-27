@@ -9,8 +9,8 @@ add_executable(Fractals
         Controller/controller.cpp
         Cuda/cuda_formula_image_processor.cu
         Cuda/formulas_samples.cu
-        Cuda/formulas_samples.cuh
         Helpers/double_comparison.cpp
+        Helpers/expression_parser.cpp
         Image/color.cpp
         Image/gradient.cpp
         Image/image.cpp
