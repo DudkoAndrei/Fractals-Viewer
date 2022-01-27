@@ -13,17 +13,19 @@
 template<typename T>
 class Calculator {
  public:
-  CUDA_CALLABLE_MEMBER Calculator(Token* expression, size_t length);
+  CUDA_CALLABLE_MEMBER Calculator(const Token* expression, size_t length);
   CUDA_CALLABLE_MEMBER Complex<T> Calculate(
       const Complex<T>& z,
       const Complex<T>& c);
  private:
-  Token* expression_;
+  const Token* expression_;
   size_t expression_length_;
 };
 
 template<typename T>
-CUDA_CALLABLE_MEMBER Calculator<T>::Calculator(Token* expression, size_t length)
+CUDA_CALLABLE_MEMBER Calculator<T>::Calculator(
+    const Token* expression,
+    size_t length)
     : expression_(expression), expression_length_(length) {}
 
 template<typename T>
