@@ -1,6 +1,10 @@
 #pragma once
 
+#include "../Helpers/expression_parser.h"
 #include "../Image/image_settings.h"
 #include "array.cuh"
 
-void CudaMandelbrotBWSet(Array<bool>* data, const ImageSettings& settings);
+void CudaBWFractal(
+    Array<bool>* data,
+    const ImageSettings& settings,
+    const std::vector<Token>& expression);

@@ -5,7 +5,7 @@
 Image CudaFormulaImageProcessor::GenerateImage(
     const ImageSettings& settings) const {
   Array<bool> points_values(settings.width * settings.height);
-  CudaMandelbrotBWSet(&points_values, settings);
+  CudaBWFractal(&points_values, settings, Parse("conj(z) * conj(z) + c"));
 
   Image result(settings.width, settings.height);
   for (int y = 0; y < settings.height; ++y) {
