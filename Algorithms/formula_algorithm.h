@@ -6,7 +6,7 @@
 
 #include "abstract_formula_algorithm.h"
 #include "../Point/point.h"
-#include "PolynomialCalculator/polynomial_calculator.h"
+#include "../Cuda/PolynomialCalculator/polynomial_calculator.cuh"
 
 class FormulaAlgorithm : AbstractFormulaAlgorithm {
  public:
