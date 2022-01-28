@@ -4,15 +4,13 @@
 #include <optional>
 #include <utility>
 
+#include "abstract_formula_algorithm.h"
 #include "../Point/point.h"
 
-class FormulaAlgorithm {
+class FormulaAlgorithm : AbstractFormulaAlgorithm {
  public:
-  explicit FormulaAlgorithm(
-      std::function<std::optional<long long>(const Point& point)> function);
-
-  std::optional<long long> IterationsToConvergeCount(const Point& point) const;
-
- private:
-  std::function<std::optional<long long>(const Point& point)> function_;
+  virtual void Calculate(
+      std::vector<uint64_t>* iters_count,
+      const ImageSettings& settings,
+      const std::vector<Token>& expression) const;
 };
