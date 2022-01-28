@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../ImageProcessor/formula_image_processor.h"
+#include "../ImageProcessor/abstract_image_processor.h"
 
 class Controller {
  public:
@@ -10,7 +10,7 @@ class Controller {
   void RunCudaTest();
 
  private:
-  std::unique_ptr<FormulaImageProcessor> image_processor_;
+  std::unique_ptr<AbstractImageProcessor> image_processor_;
 };
 
 
