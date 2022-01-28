@@ -7,8 +7,8 @@ set(CMAKE_CUDA_STANDARD 17)
 add_executable(Fractals
         Algorithms/formula_algorithm.cpp
         Controller/controller.cpp
-        Cuda/cuda_formula_image_processor.cu
-        Cuda/formulas_samples.cu
+        Cuda/fractal_algorithms.cu
+        Cuda/cuda_formula_algorithm.cu
         Helpers/double_comparison.cpp
         Helpers/expression_parser.cpp
         Image/color.cpp
