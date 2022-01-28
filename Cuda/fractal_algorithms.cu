@@ -1,11 +1,11 @@
 #include "complex.cuh"
-#include "expression_calculator.cuh"
-#include "formulas_samples.cuh"
+#include "fractal_algorithms.cuh"
+#include "PolynomialCalculator/polynomial_calculator.cuh"
 
 __global__ void GenerateBWPoint(
     uint64_t* result,
     ImageSettings* settings,
-    Calculator<double>* calc) {
+    PolynomialCalculator<double>* calc) {
   uint64_t index = blockIdx.x * blockDim.x + threadIdx.x;
   if (index >= settings->width * settings->height) {
     return;
@@ -33,7 +33,7 @@ __global__ void GenerateBWPoint(
 }
 
 void CudaBWFractal(
-    Array<uint64_t>* data,
+    std::vector<uint64_t>* data,
     const ImageSettings& settings,
     const std::vector<Token>& expression) {
   uint64_t block_size = 256;
@@ -54,19 +54,31 @@ void CudaBWFractal(
              sizeof(Token) * expression.size(),
              cudaMemcpyHostToDevice);
 
-  Calculator<double> calc(d_expression, expression.size());
-  Calculator<double>* d_calc;  // calculator copy, stored in device memory
-  cudaMalloc(&d_calc, sizeof(Calculator<double>) );
+  PolynomialCalculator<double>* d_calc;
+  PolynomialCalculator<double>  // calculator copy, stored in device memory
+      calc(d_expression, expression.size());
+  cudaMalloc(&d_calc, sizeof(PolynomialCalculator<double>));
   cudaMemcpy(d_calc,
              &calc,
-             sizeof(Calculator<double>),
+             sizeof(PolynomialCalculator<double>),
              cudaMemcpyHostToDevice);
 
-  GenerateBWPoint<<<grid_size, block_size>>>(data->Data(),
+  uint64_t* d_data;  // array for data, stored in device memory
+  cudaMalloc(&d_data, sizeof(uint64_t) * data->size());
+
+  GenerateBWPoint<<<grid_size, block_size>>>(d_data,
                                              d_settings,
                                              d_calc);
 
   cudaDeviceSynchronize();
 
+  cudaMemcpy(data->data(),
+             d_data,
+             sizeof(uint64_t) * data->size(),
+             cudaMemcpyDeviceToHost);
+
   cudaFree(d_settings);
+  cudaFree(d_expression);
+  cudaFree(d_calc);
+  cudaFree(d_data);
 }

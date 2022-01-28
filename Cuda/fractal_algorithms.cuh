@@ -2,9 +2,10 @@
 
 #include "../Helpers/expression_parser.h"
 #include "../Image/image_settings.h"
-#include "array.cuh"
+
+#include <vector>
 
 void CudaBWFractal(
-    Array<uint64_t>* data,
+    std::vector<uint64_t>* data,
     const ImageSettings& settings,
     const std::vector<Token>& expression);
