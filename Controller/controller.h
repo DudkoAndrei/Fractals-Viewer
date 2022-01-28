@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "../Cuda/cuda_formula_image_processor.cuh"
 #include "../ImageProcessor/formula_image_processor.h"
 
 class Controller {
@@ -12,7 +11,6 @@ class Controller {
 
  private:
   std::unique_ptr<FormulaImageProcessor> image_processor_;
-  std::unique_ptr<CudaFormulaImageProcessor> cuda_image_processor_;
 };
 
 
