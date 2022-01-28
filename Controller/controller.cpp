@@ -18,10 +18,10 @@ std::optional<long long> MandelbrotSet(const Point& point) {
 }
 
 void Controller::RunTest() {
-  // image_processor_ = std::make_unique<FormulaImageProcessor>(MandelbrotSet);
-  //
-  // ImageSettings settings = {1000, 1000, 0, 0, 1, 1};
-  // image_processor_->GenerateImage(settings).WriteToFile("first.png");
+  image_processor_ = std::make_unique<FormulaImageProcessor>();
+
+  ImageSettings settings = {1000, 1000, 0, 0, 1, 1};
+  image_processor_->GenerateImage(settings).WriteToFile("first.png");
 }
 
 void Controller::RunCudaTest() {
