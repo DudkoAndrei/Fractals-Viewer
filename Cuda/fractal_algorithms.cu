@@ -2,8 +2,23 @@
 #include "fractal_algorithms.cuh"
 #include "PolynomialCalculator/polynomial_calculator.cuh"
 
+// I don't know why, but if I move it to separate files, compilation fails
+// (some Cuda tricks)
+
+struct CudaPointInfo {
+  __host__ __device__ CudaPointInfo() = default;
+  __host__ __device__ CudaPointInfo(
+      uint64_t iters_count,
+      Complex<double> finish_point) :
+      iters_count(iters_count), finish_point(finish_point) {}
+
+  uint64_t iters_count{0};
+  Complex<double> finish_point;
+};
+
+// TODO(niki4smirn): fix result type
 __global__ void GenerateBWPoint(
-    uint64_t* result,
+    CudaPointInfo* result,
     ImageSettings* settings,
     PolynomialCalculator<double>* calc) {
   uint64_t index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -26,14 +41,14 @@ __global__ void GenerateBWPoint(
   }
 
   if (iteration < 1000) {
-    result[index] = iteration % 16 + 1;
+    result[index] = {iteration % 16 + 1, z};
   } else {
-    result[index] = 0;
+    result[index] = {0, {}};
   }
 }
 
 void CudaBWFractal(
-    std::vector<uint64_t>* data,
+    std::vector<PointInfo>* data,
     const ImageSettings& settings,
     const std::vector<Token>& expression) {
   uint64_t block_size = 256;
@@ -56,15 +71,15 @@ void CudaBWFractal(
 
   PolynomialCalculator<double>* d_calc;
   PolynomialCalculator<double>  // calculator copy, stored in device memory
-      calc(d_expression, expression.size());
+  calc(d_expression, expression.size());
   cudaMalloc(&d_calc, sizeof(PolynomialCalculator<double>));
   cudaMemcpy(d_calc,
              &calc,
              sizeof(PolynomialCalculator<double>),
              cudaMemcpyHostToDevice);
 
-  uint64_t* d_data;  // array for data, stored in device memory
-  cudaMalloc(&d_data, sizeof(uint64_t) * data->size());
+  CudaPointInfo* d_data;  // array for data, stored in device memory
+  cudaMalloc(&d_data, sizeof(CudaPointInfo) * data->size());
 
   GenerateBWPoint<<<grid_size, block_size>>>(d_data,
                                              d_settings,
@@ -72,10 +87,18 @@ void CudaBWFractal(
 
   cudaDeviceSynchronize();
 
-  cudaMemcpy(data->data(),
+  std::vector<CudaPointInfo> temp_data(settings.width * settings.height);
+
+  cudaMemcpy(temp_data.data(),
              d_data,
-             sizeof(uint64_t) * data->size(),
+             sizeof(CudaPointInfo) * data->size(),
              cudaMemcpyDeviceToHost);
+
+  int pos = 0;
+  for (auto[iters, point] : temp_data) {
+    (*data)[pos] = {iters, {point.Real(), point.Imag()}};
+    ++pos;
+  }
 
   cudaFree(d_settings);
   cudaFree(d_expression);
