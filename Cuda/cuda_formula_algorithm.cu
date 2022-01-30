@@ -4,6 +4,6 @@
 void CudaFormulaAlgorithm::Calculate(
     std::vector<PointInfo>* point_info,
     const ImageSettings& settings,
-    const std::vector<Token>& expression) const {
+    const std::vector<double>& expression) const {
   CudaBWFractal(point_info, settings, expression);
 }

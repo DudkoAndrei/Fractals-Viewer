@@ -13,7 +13,7 @@ class FormulaAlgorithm : public AbstractFormulaAlgorithm {
   void Calculate(
       std::vector<PointInfo>* iters_count,
       const ImageSettings& settings,
-      const std::vector<Token>& expression) const override;
+      const std::vector<double>& expression) const override;
 
  private:
   static PointInfo CalculatePoint(

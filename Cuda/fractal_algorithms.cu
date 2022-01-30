@@ -36,7 +36,7 @@ __global__ void GenerateBWPoint(
 
   uint64_t iteration = 0;
   while (iteration < 1000 && z.Abs() < (2 << 8)) {
-    z = calc->Calculate(z, c);
+    z = calc->Calculate(z) + c;
     ++iteration;
   }
 
@@ -50,7 +50,7 @@ __global__ void GenerateBWPoint(
 void CudaBWFractal(
     std::vector<PointInfo>* data,
     const ImageSettings& settings,
-    const std::vector<Token>& expression) {
+    const std::vector<double>& expression) {
   uint64_t block_size = 256;
   uint64_t grid_size =
       (settings.width * settings.height + block_size - 1) / block_size;
@@ -62,11 +62,11 @@ void CudaBWFractal(
              sizeof(ImageSettings),
              cudaMemcpyHostToDevice);
 
-  Token* d_expression;  // expression copy, stored in device memory
-  cudaMalloc(&d_expression, sizeof(Token) * expression.size());
+  double* d_expression;  // expression copy, stored in device memory
+  cudaMalloc(&d_expression, sizeof(double) * expression.size());
   cudaMemcpy(d_expression,
              expression.data(),
-             sizeof(Token) * expression.size(),
+             sizeof(double) * expression.size(),
              cudaMemcpyHostToDevice);
 
   PolynomialCalculator<double>* d_calc;

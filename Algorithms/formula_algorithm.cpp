@@ -7,7 +7,7 @@
 void FormulaAlgorithm::Calculate(
     std::vector<PointInfo>* point_info,
     const ImageSettings& settings,
-    const std::vector<Token>& expression) const {
+    const std::vector<double>& expression) const {
   PolynomialCalculator<double> calc(expression.data(), expression.size());
   for (int y = 0; y < settings.height; ++y) {
     for (int x = 0; x < settings.width; ++x) {
@@ -32,7 +32,7 @@ PointInfo FormulaAlgorithm::CalculatePoint(
 
   size_t iteration = 0;
   while (iteration < 1000 && z.Abs() < (2 << 8)) {
-    z = calc.Calculate(z, c);
+    z = calc.Calculate(z) + c;
     ++iteration;
   }
 

@@ -8,7 +8,6 @@
 using std::fabs;
 #endif
 
-#include "../../Helpers/expression_parser.h"
 #include "../complex.cuh"
 
 namespace polynomial {
@@ -27,37 +26,34 @@ class PolynomialCalculator {
  public:
   // TODO(DudkoAndrey)
   // explicit PolynomialCalculator(std::vector<Token> polynomial);
-  PolynomialCalculator() = default;
 
   CUDA_CALLABLE_MEMBER PolynomialCalculator(
-      const Token* expression,
+      const T* expression,
       size_t size,
       polynomial::Type type = polynomial::Type::kDefault);
 
   CUDA_CALLABLE_MEMBER Complex<T> Calculate(
-      Complex<T> z,
-      const Complex<T>& c) const;
+      Complex<T> z) const;
 
-  CUDA_CALLABLE_MEMBER const Token* Data() const;
+  CUDA_CALLABLE_MEMBER const T* Data() const;
   CUDA_CALLABLE_MEMBER size_t Size() const;
 
  private:
-  const Token* expression_;
+  const T* expression_;
   size_t size_;
   polynomial::Type type_;
 };
 
 template<typename T>
 CUDA_CALLABLE_MEMBER PolynomialCalculator<T>::PolynomialCalculator(
-    const Token* expression,
+    const T* expression,
     size_t size,
     polynomial::Type type)
     : expression_(expression), size_(size), type_(type) {}
 
 template<typename T>
 CUDA_CALLABLE_MEMBER Complex<T> PolynomialCalculator<T>::Calculate(
-    Complex<T> z,
-    const Complex<T>& c) const {
+    Complex<T> z) const {
   Complex<T> result;
   switch (type_) {
     case polynomial::Type::kConjugate: {
@@ -82,16 +78,14 @@ CUDA_CALLABLE_MEMBER Complex<T> PolynomialCalculator<T>::Calculate(
 
   for (size_t i = 0; i < size_; ++i) {
     result *= z;
-    result += expression_[i].value;
+    result += expression_[i];
   }
-
-  result += c;
 
   return result;
 }
 
 template<typename T>
-CUDA_CALLABLE_MEMBER const Token* PolynomialCalculator<T>::Data() const {
+CUDA_CALLABLE_MEMBER const T* PolynomialCalculator<T>::Data() const {
   return expression_;
 }
 
