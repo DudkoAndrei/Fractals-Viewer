@@ -9,4 +9,4 @@
 void CudaBWFractal(
     std::vector<PointInfo>* data,
     const ImageSettings& settings,
-    const std::vector<Token>& expression);
+    const std::vector<double>& expression);

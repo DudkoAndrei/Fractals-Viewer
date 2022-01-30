@@ -33,8 +33,7 @@ Image FormulaImageProcessor::GenerateImage(
   }
   algorithm->Calculate(&points_info,
                        settings,
-                       std::vector<Token>{{Token("1")}, {Token("0")},
-                                          {Token("0")}});
+                       {1, 0, 0});
 
   for (int y = 0; y < height; ++y) {
     for (int x = 0; x < width; ++x) {

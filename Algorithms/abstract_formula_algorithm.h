@@ -12,7 +12,7 @@ class AbstractFormulaAlgorithm {
   virtual void Calculate(
       std::vector<PointInfo>* iters_count,
       const ImageSettings& settings,
-      const std::vector<Token>& expression) const = 0;
+      const std::vector<double>& expression) const = 0;
 };
 
 
