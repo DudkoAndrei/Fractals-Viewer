@@ -4,7 +4,6 @@
 
 #include "../Point/point_info.h"
 
-
 void FormulaAlgorithm::Calculate(
     std::vector<PointInfo>* point_info,
     const ImageSettings& settings,
@@ -12,7 +11,9 @@ void FormulaAlgorithm::Calculate(
   PolynomialCalculator<double> calc(expression.data(), expression.size());
   for (int y = 0; y < settings.height; ++y) {
     for (int x = 0; x < settings.width; ++x) {
-      (*point_info)[y * settings.width + x] = CalculatePoint(Point(x, y), calc);
+      (*point_info)[y * settings.width + x] = CalculatePoint(Point(x, y),
+                                                             settings,
+                                                             calc);
     }
   }
 }
@@ -20,9 +21,13 @@ void FormulaAlgorithm::Calculate(
 // TODO(niki4smirn): remove magic numbers
 PointInfo FormulaAlgorithm::CalculatePoint(
     const Point& point,
+    const ImageSettings& settings,
     const PolynomialCalculator<double>& calc) {
-  Complex<double> c((point.x() - 500) / 200.0,
-                    (point.y() - 500) / 200.0);
+  Complex<double> c
+      ((point.x() - settings.width / 2.0 - settings.offset_x) /
+           settings.scale_x,
+       (point.y() - settings.height / 2.0 - settings.offset_y) /
+           settings.scale_y);
   Complex<double> z(0.0, 0.0);
 
   size_t iteration = 0;

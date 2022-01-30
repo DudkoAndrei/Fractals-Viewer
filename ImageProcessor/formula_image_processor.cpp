@@ -56,10 +56,7 @@ Color FormulaImageProcessor::GetPointColorByIters(const Point& point,
 
   double iter = iters_count;
   iter += 1 - nu;
-
   iter *= 2;
 
-  Color q = gradient_[iter];
-
-  return q;
+  return gradient_[iter];
 }
