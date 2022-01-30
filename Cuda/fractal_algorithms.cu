@@ -41,7 +41,7 @@ __global__ void GenerateBWPoint(
   }
 
   if (iteration < 1000) {
-    result[index] = {iteration % 16 + 1, z};
+    result[index] = {iteration, z};
   } else {
     result[index] = {0, {}};
   }

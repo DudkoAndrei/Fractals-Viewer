@@ -8,7 +8,7 @@
 FormulaImageProcessor::FormulaImageProcessor() {
   gradient_ = Gradient(std::vector<Gradient::GradientPoint>{
       {0, Color{0, 0, 0}},
-      {100000, Color{255, 255, 255}}});
+      {100, Color{255, 255, 255}}});
 }
 
 FormulaImageProcessor::FormulaImageProcessor(Gradient gradient) :
@@ -57,11 +57,9 @@ Color FormulaImageProcessor::GetPointColorByIters(const Point& point,
   double iter = iters_count;
   iter += 1 - nu;
 
-  iter *= 100;
+  iter *= 2;
 
   Color q = gradient_[iter];
-  Color w = gradient_[iter + 1];
 
-  double rate = iter - std::floor(iter);
-  return q * rate + w * (1.0 - rate);
+  return q;
 }
