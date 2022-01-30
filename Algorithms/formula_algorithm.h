@@ -18,5 +18,6 @@ class FormulaAlgorithm : public AbstractFormulaAlgorithm {
  private:
   static PointInfo CalculatePoint(
       const Point& point,
+      const ImageSettings& settings,
       const PolynomialCalculator<double>& calc);
 };
