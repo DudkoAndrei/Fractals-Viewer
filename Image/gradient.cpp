@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "../Helpers/double_comparison.h"
+
 Gradient::Gradient(const std::vector<Color>& colors) {
   std::vector<GradientPoint> points;
   float pos = 0;
@@ -23,17 +25,22 @@ void Gradient::FillPoints(const std::vector<GradientPoint>& points) {
 }
 
 Color Gradient::operator[](double coordinate) const {
-  auto closest_right = points_.upper_bound(coordinate);
   auto closest_left = points_.lower_bound(coordinate);
-  --closest_left;
   assert(closest_left != points_.end());
-  assert(closest_right != points_.end());
+  auto closest_right = closest_left;
+  if (helpers::double_comparison::IsLess(coordinate, closest_left->first)) {
+    --closest_left;
+  } else {
+    ++closest_right;
+  }
 
   double alpha = 0;
   if (closest_left->first != closest_right->first) {
     alpha = (closest_right->first - coordinate) /
         (closest_right->first - closest_left->first);
   }
+  assert(closest_right != points_.end() ||
+      helpers::double_comparison::IsEqual(alpha, 1));
   return Color::Mix(closest_left->second, closest_right->second, alpha);
 }
 
