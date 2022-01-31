@@ -9,7 +9,7 @@ class AbstractImageProcessor {
  public:
   virtual Image GenerateImage(
       bool use_cuda,
-      const ImageSettings& settings) const = 0;
+      const ImageSettings& settings) = 0;
 
   virtual ~AbstractImageProcessor() = default;
 };

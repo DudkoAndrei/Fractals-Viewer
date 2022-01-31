@@ -1,5 +1,5 @@
 #pragma once
 
 namespace constants {
-  constexpr double kEps = 1e-4;
+  constexpr double kEps = 1e-2;
 }  // namespace constants
