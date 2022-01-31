@@ -13,6 +13,8 @@ class AbstractFormulaAlgorithm {
       std::vector<PointInfo>* iters_count,
       const ImageSettings& settings,
       const std::vector<double>& expression) const = 0;
+
+  virtual ~AbstractFormulaAlgorithm() = default;
 };
 
 
