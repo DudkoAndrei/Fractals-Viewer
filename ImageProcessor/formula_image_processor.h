@@ -14,10 +14,10 @@ class FormulaImageProcessor : public AbstractImageProcessor {
   explicit FormulaImageProcessor(Gradient gradient);
   Image GenerateImage(
       bool use_cuda,
-      const ImageSettings& settings) const override;
+      const ImageSettings& settings) override;
 
  private:
-  Color GetPointColorByIters(const Point& point, uint64_t iters_count) const;
+  double GetGradientPos(const Point& point, uint64_t iters_count) const;
 
   Gradient gradient_;
 };

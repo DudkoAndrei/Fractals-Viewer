@@ -20,6 +20,8 @@ class Gradient {
 
   void AddPoint(const GradientPoint& point);
 
+  void Scale(double new_len);
+
   double GetLeftBound() const;
   double GetRightBound() const;
 

@@ -1,5 +1,6 @@
 #include "gradient.h"
 
+#include <algorithm>
 #include <cassert>
 
 #include "../Helpers/double_comparison.h"
@@ -14,18 +15,23 @@ Gradient::Gradient(const std::vector<Color>& colors) {
   FillPoints(points);
 }
 
-Gradient::Gradient(const std::vector<GradientPoint>& points)  {
+Gradient::Gradient(const std::vector<GradientPoint>& points) {
   FillPoints(points);
 }
 
 void Gradient::FillPoints(const std::vector<GradientPoint>& points) {
-  for (const auto& [coordinate, color] : points) {
+  for (const auto&[coordinate, color] : points) {
     points_[coordinate] = color;
   }
 }
 
 Color Gradient::operator[](double coordinate) const {
-  auto closest_left = points_.lower_bound(coordinate);
+  auto closest_left =
+      std::lower_bound(points_.begin(), points_.end(), coordinate,
+                       [](std::pair<double, Color> first, double second) {
+                         return helpers::double_comparison::IsLess(first.first,
+                                                                   second);
+                       });
   assert(closest_left != points_.end());
   auto closest_right = closest_left;
   if (helpers::double_comparison::IsLess(coordinate, closest_left->first)) {
@@ -56,4 +62,13 @@ double Gradient::GetRightBound() const {
 
 void Gradient::AddPoint(const Gradient::GradientPoint& point) {
   points_[point.coordinate] = point.color;
+}
+
+void Gradient::Scale(double new_len) {
+  double scale_coefficient = new_len / (GetRightBound() - GetLeftBound());
+  std::map<double, Color> new_points;
+  for (auto&[coordinate, color] : points_) {
+    new_points[coordinate * scale_coefficient] = color;
+  }
+  points_ = std::move(new_points);
 }

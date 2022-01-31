@@ -4,6 +4,8 @@
 #include <cmath>
 #include <tuple>
 
+#include "../Helpers/double_comparison.h"
+
 Color::Color(uint8_t red, uint8_t green, uint8_t blue)
     : red_(red), green_(green), blue_(blue) {}
 
@@ -86,6 +88,6 @@ bool Color::operator!=(const Color& rhs) const {
 }
 
 Color Color::Mix(const Color& color1, const Color& color2, double alpha) {
-  assert(std::fabs(alpha) <= 1);
+  assert(helpers::double_comparison::IsLessOrEqual(std::fabs(alpha), 1));
   return color1 * alpha + (1 - alpha) * color2;
 }
