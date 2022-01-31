@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "../Image/image_settings.h"
-#include "../Helpers/expression_parser.h"
 #include "../Point/point_info.h"
 
 class AbstractFormulaAlgorithm {
