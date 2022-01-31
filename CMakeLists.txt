@@ -11,7 +11,6 @@ add_executable(Fractals
         Cuda/cuda_formula_algorithm.cu
         Cuda/fractal_algorithms.cu
         Helpers/double_comparison.cpp
-        Helpers/expression_parser.cpp
         Image/color.cpp
         Image/gradient.cpp
         Image/image.cpp

@@ -4,12 +4,14 @@
 #define CUDA_CALLABLE_MEMBER __host__ __device__
 #else
 #define CUDA_CALLABLE_MEMBER
+#include <cmath>
+using std::sqrt;
 #endif
 
 template<typename T>
 class Complex {
  public:
-  CUDA_CALLABLE_MEMBER Complex() = default;
+  Complex() = default;
   CUDA_CALLABLE_MEMBER Complex(const T& real, const T& imag);
   CUDA_CALLABLE_MEMBER Complex(const T& real);
 
