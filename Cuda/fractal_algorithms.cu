@@ -1,6 +1,7 @@
 #include "complex.cuh"
 #include "fractal_algorithms.cuh"
 #include "PolynomialCalculator/polynomial_calculator.cuh"
+#include "cuda_error_handler.cuh"
 
 // I don't know why, but if I move it to separate files, compilation fails
 // (some Cuda tricks)
@@ -56,43 +57,44 @@ void CudaBWFractal(
       (settings.width * settings.height + block_size - 1) / block_size;
 
   ImageSettings* d_settings;  // settings copy, stored in device memory
-  cudaMalloc(&d_settings, sizeof(ImageSettings));
-  cudaMemcpy(d_settings,
-             &settings,
-             sizeof(ImageSettings),
-             cudaMemcpyHostToDevice);
+  HandleCudaError(cudaMalloc(&d_settings, sizeof(ImageSettings)));
+  HandleCudaError(cudaMemcpy(d_settings,
+                             &settings,
+                             sizeof(ImageSettings),
+                             cudaMemcpyHostToDevice));
 
   double* d_expression;  // expression copy, stored in device memory
-  cudaMalloc(&d_expression, sizeof(double) * expression.size());
-  cudaMemcpy(d_expression,
-             expression.data(),
-             sizeof(double) * expression.size(),
-             cudaMemcpyHostToDevice);
+  HandleCudaError(cudaMalloc(&d_expression,
+                             sizeof(double) * expression.size()));
+  HandleCudaError(cudaMemcpy(d_expression,
+                             expression.data(),
+                             sizeof(double) * expression.size(),
+                             cudaMemcpyHostToDevice));
 
   PolynomialCalculator<double>* d_calc;
   PolynomialCalculator<double>  // calculator copy, stored in device memory
   calc(d_expression, expression.size());
-  cudaMalloc(&d_calc, sizeof(PolynomialCalculator<double>));
-  cudaMemcpy(d_calc,
-             &calc,
-             sizeof(PolynomialCalculator<double>),
-             cudaMemcpyHostToDevice);
+  HandleCudaError(cudaMalloc(&d_calc, sizeof(PolynomialCalculator<double>)));
+  HandleCudaError(cudaMemcpy(d_calc,
+                             &calc,
+                             sizeof(PolynomialCalculator<double>),
+                             cudaMemcpyHostToDevice));
 
   CudaPointInfo* d_data;  // array for data, stored in device memory
-  cudaMalloc(&d_data, sizeof(CudaPointInfo) * data->size());
+  HandleCudaError(cudaMalloc(&d_data, sizeof(CudaPointInfo) * data->size()));
 
   GenerateBWPoint<<<grid_size, block_size>>>(d_data,
                                              d_settings,
                                              d_calc);
 
-  cudaDeviceSynchronize();
+  HandleCudaError(cudaDeviceSynchronize());
 
   std::vector<CudaPointInfo> temp_data(settings.width * settings.height);
 
-  cudaMemcpy(temp_data.data(),
-             d_data,
-             sizeof(CudaPointInfo) * data->size(),
-             cudaMemcpyDeviceToHost);
+  HandleCudaError(cudaMemcpy(temp_data.data(),
+                             d_data,
+                             sizeof(CudaPointInfo) * data->size(),
+                             cudaMemcpyDeviceToHost));
 
   int pos = 0;
   for (auto[iters, point] : temp_data) {
@@ -100,8 +102,8 @@ void CudaBWFractal(
     ++pos;
   }
 
-  cudaFree(d_settings);
-  cudaFree(d_expression);
-  cudaFree(d_calc);
-  cudaFree(d_data);
+  HandleCudaError(cudaFree(d_settings));
+  HandleCudaError(cudaFree(d_expression));
+  HandleCudaError(cudaFree(d_calc));
+  HandleCudaError(cudaFree(d_data));
 }
