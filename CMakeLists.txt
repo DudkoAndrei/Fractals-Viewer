@@ -17,4 +17,5 @@ add_executable(Fractals
         ImageProcessor/abstract_image_processor.cpp
         ImageProcessor/formula_image_processor.cpp
         main.cpp
-        Point/point.cpp)
+        Point/point.cpp
+        Helpers/TimeMeasurer/time_measurer.cpp)
