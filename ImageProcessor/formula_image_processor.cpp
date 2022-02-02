@@ -50,7 +50,7 @@ Image FormulaImageProcessor::GenerateImage(
       if (iter_val != 0) {
         result[y][x] = gradient_[log(GetGradientPos(point, iter_val))];
       } else {
-        result[y][x] = gradient_[gradient_.GetLeftBound()];
+        result[y][x] = {0, 0, 0};
       }
     }
   }
@@ -58,7 +58,7 @@ Image FormulaImageProcessor::GenerateImage(
 }
 
 double FormulaImageProcessor::GetGradientPos(const Point& point,
-                                             uint64_t iters_count) const {
+                                             uint64_t iters_count) {
   double log_zn = log(point.x() * point.x() + point.y() * point.y()) / 2;
   double nu = log(log_zn / log(2)) / log(2);
 

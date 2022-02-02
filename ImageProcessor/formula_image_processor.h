@@ -17,7 +17,7 @@ class FormulaImageProcessor : public AbstractImageProcessor {
       const ImageSettings& settings) override;
 
  private:
-  double GetGradientPos(const Point& point, uint64_t iters_count) const;
+  static double GetGradientPos(const Point& point, uint64_t iters_count);
 
   Gradient gradient_;
 };
