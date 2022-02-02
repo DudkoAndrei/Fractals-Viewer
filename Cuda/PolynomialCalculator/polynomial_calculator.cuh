@@ -24,8 +24,9 @@ enum class Type {
 template<typename T>
 class PolynomialCalculator {
  public:
-  // TODO(DudkoAndrey)
-  // explicit PolynomialCalculator(std::vector<Token> polynomial);
+  explicit PolynomialCalculator(
+      const std::vector<double>& polynomial,
+      polynomial::Type type = polynomial::Type::kDefault);
 
   CUDA_CALLABLE_MEMBER PolynomialCalculator(
       const T* expression,
@@ -93,3 +94,10 @@ template<typename T>
 CUDA_CALLABLE_MEMBER size_t PolynomialCalculator<T>::Size() const {
   return size_;
 }
+
+template<typename T>
+PolynomialCalculator<T>::PolynomialCalculator(
+    const std::vector<double>& polynomial,
+    polynomial::Type type)
+    : expression_(polynomial.data()), size_(polynomial.size()), type_(type) {}
+
