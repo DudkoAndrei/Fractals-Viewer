@@ -35,8 +35,5 @@ class Expression {
  private:
   double* data_{nullptr};
 
-  // idk why, but memcpy and std::memcpy don't work properly
-  static void MemCopy(double* dst, const double* src, size_t len);
-
   expression::AllSegments segments_;
 };

@@ -16,19 +16,23 @@ Expression::Expression(
   data_ = new double[new_size];
 
   segments_.default_segment = {start_pos, default_coefs.size()};
-  MemCopy(data_ + start_pos, default_coefs.data(), default_coefs.size());
+  memcpy(data_ + start_pos, default_coefs.data(),
+         default_coefs.size() * sizeof(double));
   start_pos += default_coefs.size();
 
   segments_.conjugate_segment = {start_pos, conjugate_coefs.size()};
-  MemCopy(data_ + start_pos, conjugate_coefs.data(), conjugate_coefs.size());
+  memcpy(data_ + start_pos, conjugate_coefs.data(),
+         conjugate_coefs.size() * sizeof(double));
   start_pos += conjugate_coefs.size();
 
   segments_.transpose_segment = {start_pos, transpose_coefs.size()};
-  MemCopy(data_ + start_pos, transpose_coefs.data(), transpose_coefs.size());
+  memcpy(data_ + start_pos, transpose_coefs.data(),
+         transpose_coefs.size() * sizeof(double));
   start_pos += transpose_coefs.size();
 
   segments_.absolute_segment = {start_pos, absolute_coefs.size()};
-  MemCopy(data_ + start_pos, absolute_coefs.data(), absolute_coefs.size());
+  memcpy(data_ + start_pos, absolute_coefs.data(),
+         absolute_coefs.size() * sizeof(double));
   start_pos += absolute_coefs.size();
 }
 
@@ -49,10 +53,4 @@ int Expression::GetSize() const {
 
 expression::AllSegments Expression::GetSegments() const {
   return segments_;
-}
-
-void Expression::MemCopy(double* dst, const double* src, size_t len) {
-  for (int i = 0; i < len; ++i) {
-    dst[i] = src[i];
-  }
 }
