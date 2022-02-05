@@ -9,5 +9,5 @@ class CudaFormulaAlgorithm : public AbstractFormulaAlgorithm {
   void Calculate(
       std::vector<PointInfo>* point_info,
       const ImageSettings& settings,
-      const std::vector<double>& expression) const override;
+      const Expression& expression) const override;
 };

@@ -33,7 +33,7 @@ Image FormulaImageProcessor::GenerateImage(
   }
   algorithm->Calculate(&points_info,
                        settings,
-                       {1, 0, 0});
+                       {{1, 0, 0}, {}, {}, {}});
   MinMaxContainer<double> min_max;
   for (int y = 0; y < height; ++y) {
     for (int x = 0; x < width; ++x) {
