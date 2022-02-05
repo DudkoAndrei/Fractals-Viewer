@@ -1,14 +1,10 @@
 #include "formula_algorithm.h"
 
-#include <complex>
-
-#include "../Point/point_info.h"
-
 void FormulaAlgorithm::Calculate(
     std::vector<PointInfo>* point_info,
     const ImageSettings& settings,
-    const std::vector<double>& expression) const {
-  PolynomialCalculator<double> calc(expression.data(), expression.size());
+    const Expression& expression) const {
+  PolynomialCalculator<double> calc(expression);
   for (int y = 0; y < settings.height; ++y) {
     for (int x = 0; x < settings.width; ++x) {
       (*point_info)[y * settings.width + x] = CalculatePoint(Point(x, y),
