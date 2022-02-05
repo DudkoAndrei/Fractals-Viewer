@@ -63,7 +63,8 @@ CUDA_CALLABLE_MEMBER Complex<T> PolynomialCalculator<T>::Calculate(
     result += Calculate(z.Transpose(), segments_.transpose_segment);
   }
   if (segments_.absolute_segment.len != 0) {
-    result += Calculate(z.Abs(), segments_.absolute_segment);
+    result += Calculate(Complex<T>(fabs(z.Real()), fabs(z.Imag())),
+        segments_.absolute_segment);
   }
   return result;
 }
