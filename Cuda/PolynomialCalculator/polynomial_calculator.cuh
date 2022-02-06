@@ -22,8 +22,7 @@ class PolynomialCalculator {
       const T* expression,
       const expression::AllSegments& segments);
 
-  CUDA_CALLABLE_MEMBER Complex<T> Calculate(
-      Complex<T> z) const;
+  CUDA_CALLABLE_MEMBER Complex<T> Calculate(Complex<T> z) const;
 
   CUDA_CALLABLE_MEMBER const T* Data() const;
   CUDA_CALLABLE_MEMBER size_t Size() const;

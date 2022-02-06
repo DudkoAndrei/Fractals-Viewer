@@ -7,9 +7,8 @@ void FormulaAlgorithm::Calculate(
   PolynomialCalculator<double> calc(expression);
   for (int y = 0; y < settings.height; ++y) {
     for (int x = 0; x < settings.width; ++x) {
-      (*point_info)[y * settings.width + x] = CalculatePoint(Point(x, y),
-                                                             settings,
-                                                             calc);
+      int index = y * settings.width + x;
+      (*point_info)[index] = CalculatePoint(Point(x, y), settings, calc);
     }
   }
 }
@@ -24,15 +23,16 @@ PointInfo FormulaAlgorithm::CalculatePoint(
            settings.scale_x,
        (point.y() - settings.height / 2.0 - settings.offset_y) /
            settings.scale_y);
-  Complex<double> z(0.0, 0.0);
+  Complex<double> z;
 
+  constexpr size_t max_iterations = 1000;
   size_t iteration = 0;
-  while (iteration < 1000 && z.Abs() < (2 << 8)) {
+  while (iteration < max_iterations && z.Abs() < (2 << 8)) {
     z = calc.Calculate(z) + c;
     ++iteration;
   }
 
-  if (iteration < 1000) {
+  if (iteration < max_iterations) {
     return {iteration, Point(z.Real(), z.Imag())};
   }
   return {0, {}};
