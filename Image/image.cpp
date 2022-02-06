@@ -133,7 +133,8 @@ void Image::WriteToFile(const std::string& filename) const {
     image[i + 2] = data_[pixel_pos].b();
   }
 
-  stbi_write_bmp(filename.c_str(), width_, height_, 3, image);
+  std::string filename_with_ext = filename + ".bmp";
+  stbi_write_bmp(filename_with_ext.c_str(), width_, height_, 3, image);
 }
 
 bool Image::operator!=(const Image& rhs) const {

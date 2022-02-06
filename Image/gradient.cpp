@@ -12,14 +12,14 @@ Gradient::Gradient(const std::vector<Color>& colors) {
     points.push_back({pos, color});
     ++pos;
   }
-  FillPoints(points);
+  AddPoints(points);
 }
 
 Gradient::Gradient(const std::vector<GradientPoint>& points) {
-  FillPoints(points);
+  AddPoints(points);
 }
 
-void Gradient::FillPoints(const std::vector<GradientPoint>& points) {
+void Gradient::AddPoints(const std::vector<GradientPoint>& points) {
   for (const auto&[coordinate, color] : points) {
     points_[coordinate] = color;
   }
@@ -38,6 +38,9 @@ Color Gradient::operator[](double coordinate) const {
     --closest_left;
   } else {
     ++closest_right;
+    if (closest_right == points_.end()) {
+      closest_right = closest_left;
+    }
   }
 
   double alpha = 0;
@@ -47,9 +50,6 @@ Color Gradient::operator[](double coordinate) const {
   }
   assert(closest_right != points_.end() ||
       helpers::double_comparison::IsEqual(alpha, 1));
-  if (closest_right == points_.end()) {
-    closest_right = closest_left;
-  }
   return Color::Mix(closest_left->second, closest_right->second, alpha);
 }
 
@@ -65,6 +65,10 @@ double Gradient::GetRightBound() const {
 
 void Gradient::AddPoint(const Gradient::GradientPoint& point) {
   points_[point.coordinate] = point.color;
+}
+
+void Gradient::AddPoint(double coordinate, const Color& color) {
+  points_[coordinate] = color;
 }
 
 void Gradient::Scale(double new_len) {

@@ -88,6 +88,6 @@ bool Color::operator!=(const Color& rhs) const {
 }
 
 Color Color::Mix(const Color& color1, const Color& color2, double alpha) {
-  assert(helpers::double_comparison::IsLessOrEqual(std::fabs(alpha), 1));
+  assert(helpers::double_comparison::IsInBounds(0, 1, std::fabs(alpha)));
   return color1 * alpha + (1 - alpha) * color2;
 }
