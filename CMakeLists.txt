@@ -11,14 +11,13 @@ add_executable(Fractals
         Controller/controller.cpp
         Cuda/cuda_error_handler.cu
         Cuda/cuda_formula_algorithm.cu
-        Cuda/fractal_algorithms.cu
         Helpers/double_comparison.cpp
         Image/color.cpp
         Image/gradient.cpp
         Image/image.cpp
         ImageProcessor/abstract_image_processor.cpp
         ImageProcessor/formula_image_processor.cpp
-        main.cpp
+        main.cu
         Point/point.cpp
         Helpers/TimeMeasurer/time_measurer.cpp
         Cuda/PolynomialCalculator/expression.cpp)
