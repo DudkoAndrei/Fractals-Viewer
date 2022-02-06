@@ -15,7 +15,6 @@ add_executable(Fractals
         Image/color.cpp
         Image/gradient.cpp
         Image/image.cpp
-        ImageProcessor/abstract_image_processor.cpp
         ImageProcessor/formula_image_processor.cpp
         main.cu
         Point/point.cpp

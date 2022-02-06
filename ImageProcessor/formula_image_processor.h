@@ -9,7 +9,6 @@
 
 class FormulaImageProcessor : public AbstractImageProcessor {
  public:
-  // here will be some parameters soon
   FormulaImageProcessor();
   explicit FormulaImageProcessor(Gradient gradient);
   Image GenerateImage(

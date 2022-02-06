@@ -11,7 +11,7 @@ void Controller::RunTest() {
               Color{0, 0, 255}}});
 
   ImageSettings settings = {1000, 1000, 0, 0, 200, 200};
-  image_processor_->GenerateImage(false, settings).WriteToFile("first.png");
+  image_processor_->GenerateImage(false, settings).WriteToFile("first");
 }
 
 void Controller::RunCudaTest() {
@@ -23,5 +23,5 @@ void Controller::RunCudaTest() {
               Color{0, 0, 255}}});
 
   ImageSettings settings = {1000, 1000, 0, 0, 200, 200};
-  image_processor_->GenerateImage(true, settings).WriteToFile("cuda_test.png");
+  image_processor_->GenerateImage(true, settings).WriteToFile("cuda_test");
 }

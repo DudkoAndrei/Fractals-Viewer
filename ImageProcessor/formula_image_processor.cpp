@@ -57,6 +57,7 @@ Image FormulaImageProcessor::GenerateImage(
   return result;
 }
 
+// TODO(niki4smirn): remove magic numbers
 double FormulaImageProcessor::GetGradientPos(const Point& point,
                                              uint64_t iters_count) {
   double log_zn = log(point.x() * point.x() + point.y() * point.y()) / 2;

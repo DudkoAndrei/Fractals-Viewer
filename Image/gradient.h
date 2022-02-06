@@ -18,6 +18,7 @@ class Gradient {
 
   Color operator[](double coordinate) const;
 
+  void AddPoint(double coordinate, const Color& color);
   void AddPoint(const GradientPoint& point);
 
   void Scale(double new_len);
@@ -26,7 +27,7 @@ class Gradient {
   double GetRightBound() const;
 
  private:
-  void FillPoints(const std::vector<GradientPoint>& points);
+  void AddPoints(const std::vector<GradientPoint>& points);
 
   std::map<double, Color> points_;
 };
