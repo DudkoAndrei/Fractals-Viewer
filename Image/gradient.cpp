@@ -47,6 +47,9 @@ Color Gradient::operator[](double coordinate) const {
   }
   assert(closest_right != points_.end() ||
       helpers::double_comparison::IsEqual(alpha, 1));
+  if (closest_right == points_.end()) {
+    closest_right = closest_left;
+  }
   return Color::Mix(closest_left->second, closest_right->second, alpha);
 }
 

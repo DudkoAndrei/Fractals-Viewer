@@ -18,7 +18,6 @@ struct CudaPointInfo {
   Complex<double> finish_point;
 };
 
-// TODO(niki4smirn): fix result type
 __global__ void GenerateBWPoint(
     CudaPointInfo* result,
     ImageSettings* settings,
