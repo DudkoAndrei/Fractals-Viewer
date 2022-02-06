@@ -4,7 +4,7 @@
 #include "../Point/point.h"
 #include "PolynomialCalculator/polynomial_calculator.cuh"
 
-class CudaFormulaAlgorithm : public AbstractFormulaAlgorithm {
+class CudaFormulaAlgorithm final : public AbstractFormulaAlgorithm {
  public:
   void Calculate(
       std::vector<PointInfo>* point_info,
