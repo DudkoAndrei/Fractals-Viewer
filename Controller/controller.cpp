@@ -1,6 +1,6 @@
 #include "controller.h"
 
-#include "../ImageProcessor/formula_image_processor.h"
+#include "../Image/ImageProcessor/formula_image_processor.h"
 
 void Controller::RunTest() {
   image_processor_ = std::make_unique<FormulaImageProcessor>(
