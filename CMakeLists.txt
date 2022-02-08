@@ -15,7 +15,7 @@ add_executable(Fractals
         Image/color.cpp
         Image/gradient.cpp
         Image/image.cpp
-        ImageProcessor/formula_image_processor.cpp
+        Image/ImageProcessor/formula_image_processor.cpp
         main.cu
         Point/point.cpp
         Helpers/TimeMeasurer/time_measurer.cpp
