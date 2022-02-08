@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "../Image/image.h"
-#include "../Image/image_settings.h"
+#include "../image.h"
+#include "../image_settings.h"
 
 class AbstractImageProcessor {
  public:

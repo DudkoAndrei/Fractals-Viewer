@@ -4,8 +4,8 @@
 
 #include <complex>
 
-#include "../Image/gradient.h"
-#include "../Point/point.h"
+#include "../gradient.h"
+#include "../../Point/point.h"
 
 class FormulaImageProcessor : public AbstractImageProcessor {
  public:

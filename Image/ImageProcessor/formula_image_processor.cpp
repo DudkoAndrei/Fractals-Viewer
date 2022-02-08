@@ -2,9 +2,9 @@
 
 #include <utility>
 
-#include "../Algorithms/formula_algorithm.h"
-#include "../Cuda/cuda_formula_algorithm.cuh"
-#include "../Helpers/MinMaxContainer/min_max_container.h"
+#include "../../Algorithms/formula_algorithm.h"
+#include "../../Cuda/cuda_formula_algorithm.cuh"
+#include "../../Helpers/MinMaxContainer/min_max_container.h"
 
 FormulaImageProcessor::FormulaImageProcessor() {
   gradient_ = Gradient(std::vector<Color>{
