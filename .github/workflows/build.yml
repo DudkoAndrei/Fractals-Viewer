@@ -28,7 +28,7 @@ jobs:
         id: cuda-toolkit
         with:
           cuda: '11.5.1'
-          method: 'network'
+          method: 'local'
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
